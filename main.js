@@ -113,6 +113,12 @@ function create() {
 
     // 監聽滑鼠事件
     this.input.on('pointerdown', pointer => handlePointer.call(this, pointer));
+
+    // 設置按鈕音效播放完畢事件
+    buttonSound.on('complete', function() {
+        console.log('按鈕音效播放完畢');
+        if (backgroundMusic && !backgroundMusic.isPlaying) backgroundMusic.resume();
+    });
 }
 
 function startGame() {
@@ -121,6 +127,13 @@ function startGame() {
         score = 0;
         startButton.style.display = 'none';
 
+        if (backgroundMusic && backgroundMusic.isPlaying) {
+            backgroundMusic.pause();
+        }
+        if (buttonSound) {
+            buttonSound.play();
+        }
+        
         var width = this.sys.game.config.width;
         var height = this.sys.game.config.height;
 
